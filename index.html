@@ -25,6 +25,7 @@
       }
 
       body {
+        font-family: "sans-serif";
         background-color: rgb(254, 254, 254);
         overflow: hidden;
         margin: 0;
@@ -53,7 +54,6 @@
         text-shadow: 0.1vw 0 #fff;
         font-size: 9vw;
         text-align: center;
-        /* text-transform: capitalize; */
         width: 13vw;
         height: 13vw;
       }
@@ -63,12 +63,32 @@
       #q {
         top: -0.125em;
       }
+      #save:target {
+        display: inline-block;
+      }
+      #save {
+        display: none;
+      }
       #↵,
       #\: {
         top: -0.05em;
       }
       .esc {
         font-size: 4vw;
+      }
+      #save-text,
+      #vanity {
+        font-size: 0.75rem;
+        opacity: 0.75;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0.25em 0.5em;
+      }
+      #vanity {
+        opacity: 0.5;
+        left: 0;
+        right: unset;
       }
     </style>
   </head>
@@ -78,10 +98,38 @@
       <div class="inner-stuff">
         <kbd class="esc">ESC</kbd>
         <kbd><span id=":">:</span></kbd>
+        <kbd id="save">w</kbd>
         <kbd><span id="q">q</span></kbd>
         <kbd>!</kbd>
         <kbd><span id="↵">↵</span></kbd>
       </div>
+      <div id="save-text">
+        EXPERTS ONLY:
+        <a
+          id="activate"
+          href="#save"
+          onclick="activate.style.display = 'none'; deactivate.style.display = 'inline'"
+          >I managed to edit my file and want to save it first</a
+        >
+        <a
+          id="deactivate"
+          href="#"
+          onclick="deactivate.style.display = 'none'; activate.style.display = 'inline'"
+          style="display: none;"
+          >I messed up my file and don't want to save it first</a
+        >
+      </div>
+      <div id="vanity">by <a href="//www.schmod.com">schmod</a></div>
+      <img src="//www.schmod.com/vim-pixel.gif" />
     </div>
+    <script>
+      function init() {
+        var isSave = window.location.hash.indexOf("save") > -1;
+        activate.style.display = isSave ? "none" : "inline";
+        deactivate.style.display = isSave ? "inline" : "none";
+      }
+      window.addEventListener("hashchange", init);
+      init();
+    </script>
   </body>
 </html>
